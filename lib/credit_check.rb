@@ -1,62 +1,50 @@
 
-
-# Your Luhn Algorithm Here
-
-# Output
-## If it is valid, print "The number is valid!"
-## If it is invalid, print "The number is invalid!"
-
-
-# reverse string and split the string to
-# make it easier to work with
-# go through second array and multiply every number by 2 if.odd
-# if digit is greater than 9 will subtract 9
-# add numbers and divide by 10, if no remainder % == 0 then valid. else invalid
-
 class Validate
     attr_reader :card_number
+
   def initialize(card_number)
     @card_number = card_number
   end
 
   def validate_card
-    string_read
-    multiply_odd
+    string_convert
+    doubling_operation
     subtract_num
     check_card
   end
 
-  def string_read
-    @card_number = card_number.reverse.chars
+  def string_convert
+      @card_number = card_number.reverse.chars
   end
 
-  def multiply_odd
-    @card_number = card_number.map.with_index do |value, index|
+  def doubling_operation
+    @card_number = card_number.map.with_index do |num, index|
       if index.odd?
-        value = value.to_i * 2
+        num.to_i * 2
       else
-        value.to_i
+        num.to_i
       end
     end
   end
 
   def subtract_num
-    @card_number = card_number.map do |value|
-      if value > 9
-        value -= 9
+    @card_number = card_number.map do |num|
+      if num > 9
+        num - 9
       else
-        value
+        num
       end
     end
   end
 
   def check_card
-    @card_number = card_number.inject(0){|sum,x| sum + x }
-    if @card_number % 10 == 0
-      puts "The number is valid!"
-    else
-      puts "The number is invalid!"
+    @card_number = card_number.inject(0) do |sum, x|
+      sum + x
     end
+      if @card_number % 10 == 0
+        puts "The number is valid!"
+      else
+        puts "The number is invalid!"
+      end
   end
-
 end
